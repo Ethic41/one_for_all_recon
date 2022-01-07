@@ -1,0 +1,3 @@
+-r Sublist3r/requirements.txt
+pydantic
+pwntools
