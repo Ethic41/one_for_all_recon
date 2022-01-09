@@ -28,9 +28,9 @@ def main():
 
 
 def recon_single_program():
-    program_name = input("Enter the program name: ")
+    program_name = input("Enter the bug bounty program name: ").strip()
     create_program_directory(program_name)
-    number_of_threads = int(input("Enter the number of threads [default is 10]: "))
+    number_of_threads = int(input("Enter the number of threads [default is 10]: ").strip())
     number_of_threads = number_of_threads if number_of_threads else 10
     scope_subdomains = get_single_program_scope()
     sublister_subdomains = sublister_recon(scope_subdomains, threads=number_of_threads)
