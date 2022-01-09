@@ -2,7 +2,12 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+# custom
+sample_files/*
+!sample_files/multiple_program_scope.dmd
+!sample_files/single_program_scope.dmd
+output_files/*
+!output_files/*.dmd
 # C extensions
 *.so
 
