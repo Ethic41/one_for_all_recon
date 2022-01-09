@@ -6,6 +6,7 @@
 # @Description : something cool
 
 
+import os
 from typing import List
 
 from threading import Thread
@@ -27,10 +28,16 @@ def main():
 
 
 def recon_single_program():
+    program_name = input("Enter the program name: ")
+    create_program_directory(program_name)
+    number_of_threads = int(input("Enter the number of threads [default is 10]: "))
+    number_of_threads = number_of_threads if number_of_threads else 10
     scope_subdomains = get_single_program_scope()
-    sublister_subdomains = sublister_recon(scope_subdomains)
+    sublister_subdomains = sublister_recon(scope_subdomains, threads=number_of_threads)
     valid_subdomains = verify_subdomains(sublister_subdomains)
-    write_to_file(f"output_files/{scope_subdomains[0]}_recon", valid_subdomains)
+
+    write_to_file(f"output_files/{program_name}/resolved_subdomains", valid_subdomains)
+    write_to_file(f"output_files/{program_name}/unresolved_subdomains", set(sublister_subdomains) - valid_subdomains)
 
 
 def get_single_program_scope():
@@ -99,6 +106,13 @@ def verify_subdomains(subdomains, max_threads=10):
             create_workers(subdomains[i * max_threads: (i + 1) * max_threads])
 
     return valid_subdomains
+
+
+def create_program_directory(name):
+    if os.path.isdir(f"output_files/{name}"):
+        pass
+    else:
+        os.mkdir(f"output_files/{name}")
 
 
 def write_to_file(filename, subdomains):
